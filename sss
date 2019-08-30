@@ -1,0 +1,19 @@
+<?php  /* If the error is due to calling mysqli in a class */
+
+    class dbconnect extends mysqli{
+
+        private $host = 'localhost';
+        private $user = 'vicky';
+        private $pass = 'root';
+        private $db = 'mono';
+
+        public function __construct() {
+            parent::__construct($this->host, $this->user, $this->pass, $this->db);
+
+            if (mysqli_connect_error()) {
+                die('Connect Error (' . mysqli_connect_errno() . ') ' .
+                    mysqli_connect_error());
+            }
+        }
+    }
+?>

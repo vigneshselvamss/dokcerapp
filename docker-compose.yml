@@ -1,0 +1,52 @@
+version: '3'
+services:
+    phpapp:
+       build: .
+       container_name: websitephp
+       ports:
+          - '8889:80'
+       volumes:
+          -  /var/www/html
+       depends_on:
+          - db
+       links:
+          - db
+       environment:
+          - MYSQL_ROOT_PASSWORD=mono
+          - MYSQL_DATABASE=mono
+          - MYSQL_USER=phpuser
+          - MYSQL_PASSWORD=mono
+       networks:
+          - appnet
+
+    db:
+       image: mysql:5.7.22
+       container_name: mysqlcontainer
+       volumes:
+          - /var/lib/mysql
+       ports:
+          - "3306:3306"
+       environment:
+          - MYSQL_ROOT_PASSWORD=mono
+          - MYSQL_DATABASE=mono
+          - MYSQL_USER=phpuser
+          - MYSQL_PASSWORD=mono
+       networks:
+          - appnet
+
+networks:
+       appnet:
+
+
+
+            #apache:
+            #build: ./apache
+            #    container_name: apache2conatiner
+            # ports:
+            # - "9911:80"
+            # volumes:
+            #- .:/var/www/html
+            # links:
+            #- phpapp
+
+

@@ -1,0 +1,29 @@
+FROM webdevops/php-apache-dev:ubuntu-16.04
+
+RUN apt-get update
+
+RUN apt-get install -y \
+    && docker-php-ext-install php-mysqli
+
+RUN docker-php-ext-install mysqli
+
+RUN docker-php-ext-enable mysqli
+
+COPY php.conf /etc/apache2/sites-available/
+
+RUN a2dissite 000-default.conf
+
+RUN service apache2 stop
+
+RUN service apache2 start
+
+RUN a2ensite php.conf
+
+RUN service apache2 start 
+  
+COPY . /var/www/html
+
+RUN chmod -R 777 /var/www/html
+
+
+
